@@ -1,5 +1,5 @@
 import {Map} from '@vis.gl/react-maplibre';
-import { MAP_LATITUDE, MAP_LONGITUDE, MAP_ZOOM } from '../common/constants';
+import { MAP_LATITUDE, MAP_LONGITUDE, MAP_ZOOM } from '../../common/constants';
 
 export const CostumMap = () => {
 
