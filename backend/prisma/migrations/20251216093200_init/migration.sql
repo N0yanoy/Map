@@ -1,5 +1,4 @@
 CREATE EXTENSION IF NOT EXISTS postgis;
-
 -- CreateEnum
 CREATE TYPE "TaskStatus" AS ENUM ('TODO', 'IN_PROGRESS', 'DONE', 'CANCELLED');
 
