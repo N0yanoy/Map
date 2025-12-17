@@ -10,7 +10,6 @@ export const CostumMap = () => {
         latitude: MAP_LATITUDE, 
         zoom: MAP_ZOOM
       }}
-      style={{width: "100%", height: "100%"}}
       mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
     />
   );
