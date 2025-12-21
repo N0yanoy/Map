@@ -1,16 +1,16 @@
 import { IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateTaskDto {
-  @IsString()
-  title: string;
+   @IsString()
+   title: string;
 
-  @IsOptional()
-  @IsString()
-  description?: string;
+   @IsOptional()
+   @IsString()
+   description?: string;
 
-  @IsNumber()
-  lat: number;
+   @IsNumber()
+   lat: number;
 
-  @IsNumber()
-  lng: number;
+   @IsNumber()
+   lng: number;
 }

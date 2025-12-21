@@ -7,40 +7,40 @@ import { TaskStatus } from 'src/generated/prisma/enums';
 
 @Controller('tasks')
 export class TasksController {
-  constructor(private readonly tasksService: TasksService) {}
+   constructor(private readonly tasksService: TasksService) {}
 
-  @Post()
-  create(@Body() dto: CreateTaskDto) {
-    return this.tasksService.createTask(dto);
-  }
+   @Post()
+   create(@Body() dto: CreateTaskDto) {
+      return this.tasksService.createTask(dto);
+   }
 
-  @Get()
-  getAll(@Query('status') status?: TaskStatus) {
-    return this.tasksService.getTasks(status);
-  }
+   @Get()
+   getAll(@Query('status') status?: TaskStatus) {
+      return this.tasksService.getTasks(status);
+   }
 
-  @Get(':id')
-  getOne(@Param('id') id: string) {
-    return this.tasksService.getTaskById(id);
-  }
+   @Get(':id')
+   getOne(@Param('id') id: string) {
+      return this.tasksService.getTaskById(id);
+   }
 
-  @Patch(':id/status')
-  updateStatus(@Param('id') id: string, @Body() dto: UpdateTaskStatusDto) {
-    return this.tasksService.updateStatus(id, dto.status);
-  }
+   @Patch(':id/status')
+   updateStatus(@Param('id') id: string, @Body() dto: UpdateTaskStatusDto) {
+      return this.tasksService.updateStatus(id, dto.status);
+   }
 
-  @Patch(':id/location')
-  updateLocation(@Param('id') id: string, @Body() dto: UpdateTaskLocationDto) {
-    return this.tasksService.updateLocation(id, dto.lat, dto.lng);
-  }
+   @Patch(':id/location')
+   updateLocation(@Param('id') id: string, @Body() dto: UpdateTaskLocationDto) {
+      return this.tasksService.updateLocation(id, dto.lat, dto.lng);
+   }
 
-  @Get('nearby')
-  getNearby(@Query('lat') lat: number, @Query('lng') lng: number, @Query('radius') radius: number) {
-    return this.tasksService.getNearbyTasks(Number(lat), Number(lng), Number(radius));
-  }
+   @Get('nearby')
+   getNearby(@Query('lat') lat: number, @Query('lng') lng: number, @Query('radius') radius: number) {
+      return this.tasksService.getNearbyTasks(Number(lat), Number(lng), Number(radius));
+   }
 
-  @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.tasksService.deleteTask(id);
-  }
+   @Delete(':id')
+   delete(@Param('id') id: string) {
+      return this.tasksService.deleteTask(id);
+   }
 }
