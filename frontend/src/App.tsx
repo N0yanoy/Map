@@ -1,9 +1,9 @@
-import { CostumMap } from './components/CostumMap'
+import { CustomMap } from './components/CostumMap'
 import './App.css'
 
 const App = () => {
   return (
-  <CostumMap/>
+  <CustomMap/>
   );
 };
 
