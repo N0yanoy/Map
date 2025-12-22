@@ -88,7 +88,7 @@ async updateStatus(id: string, status: TaskStatus): Promise<TaskDTO> {
       UPDATE tasks
       SET
       status = ${status},
-      finished_at = ${status === TaskStatus.DONE ? new Date() : null},
+      finished_at = ${status === TaskStatus.DONE ? new Date() : undefined},
       updated_at = now()
       WHERE id = ${id}
       RETURNING
@@ -188,7 +188,7 @@ async updateStatus(id: string, status: TaskStatus): Promise<TaskDTO> {
          title: row.title,
          description: row.description ?? undefined,
          status: row.status,
-         location: JSON.parse(row.location) as Point,
+         location: JSON.parse(row.location),
          createdAt: row.created_at,
          updatedAt: row.updated_at,
          finishedAt: row.finished_at ?? undefined,
