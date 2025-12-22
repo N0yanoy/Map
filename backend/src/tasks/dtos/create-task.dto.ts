@@ -1,16 +1,16 @@
-import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsOptional, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { GeoPointDto } from './geo-point.dto';
 
 export class CreateTaskDto {
-   @IsString()
-   title: string;
+  @IsString()
+  title: string;
 
-   @IsOptional()
-   @IsString()
-   description?: string;
+  @IsOptional()
+  @IsString()
+  description?: string;
 
-   @IsNumber()
-   lat: number;
-
-   @IsNumber()
-   lng: number;
+  @ValidateNested()
+  @Type(() => GeoPointDto)
+  location: GeoPointDto;
 }
