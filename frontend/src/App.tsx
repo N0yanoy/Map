@@ -8,7 +8,7 @@ const App = () => {
       accentColor="blue"
       grayColor="slate"
       radius="full"
-      scaling="105%"
+      scaling="110%"
     >
       <CustomMap />
     </Theme>
