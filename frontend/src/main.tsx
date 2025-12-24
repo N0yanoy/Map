@@ -1,13 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { ReactQueryProvider } from './components/ReactQueryProvider.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "@radix-ui/themes/styles.css";
 
-createRoot(document.getElementById('root')!).render(
+import App from "./App";
+import { ReactQueryProvider } from "./providers/ReactQueryProvider";
+import { GlobalStyles } from "./styles/globalStyles";
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ReactQueryProvider>
+      <GlobalStyles />
       <App />
     </ReactQueryProvider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

@@ -14,12 +14,12 @@ export type TaskRow = {
 export type TaskDTO = {
   id: string;
   title: string;
-  description?: string;
+  description?: string | null;
   status: TaskStatus;
-  location: Point;
-  createdAt: Date;
-  updatedAt: Date;
-  finishedAt?: Date;
+  location: Point; // GeoJSON Point
+  createdAt: string;
+  updatedAt: string;
+  finishedAt?: string | null;
 };
 
 export type NearbyTaskRow = TaskRow & { distance: number };

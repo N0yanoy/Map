@@ -1,10 +1,9 @@
-// frontend/src/api/tasks.ts
 import axiosClient from "./axiosClient";
-import { type TaskDTO, type NearbyTaskDTO } from "../types/tasks";
-import { TaskStatus } from "../../../backend/src/generated/prisma/enums";
+import type { Point } from "geojson";
+import type { TaskDTO, NearbyTaskDTO, TaskStatus } from "../types/tasks";
 
 export const getTasks = async (status?: TaskStatus) => {
-  const params = status ? { status } : {};
+  const params = status ? { status } : undefined;
   const { data } = await axiosClient.get<TaskDTO[]>("/tasks", { params });
   return data;
 };
@@ -14,11 +13,13 @@ export const getTaskById = async (id: string) => {
   return data;
 };
 
-export const createTask = async (task: {
+export type CreateTaskInput = {
   title: string;
   description?: string;
-  location: { type: "Point"; coordinates: [number, number] };
-}) => {
+  location: Point;
+};
+
+export const createTask = async (task: CreateTaskInput) => {
   const { data } = await axiosClient.post<TaskDTO>("/tasks", task);
   return data;
 };
@@ -28,12 +29,12 @@ export const updateTaskStatus = async (id: string, status: TaskStatus) => {
   return data;
 };
 
-export const updateTaskLocation = async (id: string, location: { type: "Point"; coordinates: [number, number] }) => {
+export const updateTaskLocation = async (id: string, location: Point) => {
   const { data } = await axiosClient.patch<TaskDTO>(`/tasks/${id}/location`, { location });
   return data;
 };
 
-export const getNearbyTasks = async (location: { type: "Point"; coordinates: [number, number] }, radius: number) => {
+export const getNearbyTasks = async (location: Point, radius: number) => {
   const { data } = await axiosClient.get<NearbyTaskDTO[]>("/tasks/nearby", {
     params: { location: JSON.stringify(location), radius },
   });
@@ -41,6 +42,5 @@ export const getNearbyTasks = async (location: { type: "Point"; coordinates: [nu
 };
 
 export const deleteTask = async (id: string) => {
-  const { data } = await axiosClient.delete(`/tasks/${id}`);
-  return data;
+  await axiosClient.delete(`/tasks/${id}`);
 };

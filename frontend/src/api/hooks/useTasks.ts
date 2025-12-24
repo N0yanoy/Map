@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { type TaskDTO } from "../../types/tasks";
 import { getTasks } from "../tasks";
-import type { TaskStatus } from "../../../../backend/src/generated/prisma/enums";
+import type { TaskDTO, TaskStatus } from "../../types/tasks";
+
+export const tasksKeys = {
+  all: ["tasks"] as const,
+  list: (status?: TaskStatus) => ["tasks", "list", status] as const,
+};
 
 export const useTasks = (status?: TaskStatus) => {
   return useQuery<TaskDTO[], Error>({
-    queryKey: ["tasks", status],
+    queryKey: tasksKeys.list(status),
     queryFn: () => getTasks(status),
   });
 };
