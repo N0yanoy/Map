@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { useMemo, useState } from "react";
-import type { TaskDTO, TaskStatus } from "../../types/tasks";
+import { TaskStatusValues, type TaskDTO, type TaskStatus } from "../../types/tasks";
 import { statusColorMap, statusLabel } from "./taskStatus";
 import { useTasksStore } from "../../store/tasksStore";
 import { useUpdateTaskStatus } from "../../api/hooks/useUpdateTaskStatus";
@@ -25,14 +25,9 @@ export const TasksSidebar = ({ tasks }: Props) => {
   const updateStatus = useUpdateTaskStatus();
   const deleteTask = useDeleteTask();
 
-  const [query, setQuery] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  const [selectedStatuses, setSelectedStatuses] = useState<TaskStatus[]>([
-    "TODO",
-    "IN_PROGRESS",
-    "DONE",
-    "CANCELLED",
-  ]);
+  const [selectedStatuses, setSelectedStatuses] = useState<TaskStatus[]>(TaskStatusValues);
 
   const toggleStatus = (status: TaskStatus) => {
     setSelectedStatuses((previousStatuses) =>
@@ -53,7 +48,7 @@ export const TasksSidebar = ({ tasks }: Props) => {
   };
 
   const filtered = useMemo(() => {
-    const normalizedSearchText  = query.trim().toLowerCase();
+    const normalizedSearchText  = searchText.trim().toLowerCase();
 
     return tasks.filter((task) => {
       // status filter
@@ -66,7 +61,7 @@ export const TasksSidebar = ({ tasks }: Props) => {
         (task.description ?? "").toLowerCase().includes(normalizedSearchText)
       );
     });
-  }, [tasks, query, selectedStatuses]);
+  }, [tasks, searchText, selectedStatuses]);
 
   const grouped = useMemo(() => {
     const map = new Map<TaskStatus, TaskDTO[]>();
@@ -104,8 +99,8 @@ export const TasksSidebar = ({ tasks }: Props) => {
 
         <TextField.Root
           placeholder="חיפוש…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
           radius="full"
         />
 

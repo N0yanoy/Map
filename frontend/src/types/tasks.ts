@@ -34,3 +34,5 @@ export const TaskStatusEnum = {
 } as const;
 
 export type TaskStatus = (typeof TaskStatusEnum)[keyof typeof TaskStatusEnum];
+
+export const TaskStatusValues = Object.values(TaskStatusEnum) as TaskStatus[];
