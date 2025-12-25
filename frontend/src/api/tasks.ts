@@ -2,9 +2,8 @@ import axiosClient from "./axiosClient";
 import type { Point } from "geojson";
 import type { TaskDTO, NearbyTaskDTO, TaskStatus } from "../types/tasks";
 
-export const getTasks = async (status?: TaskStatus) => {
-  const params = status ? { status } : undefined;
-  const { data } = await axiosClient.get<TaskDTO[]>("/tasks", { params });
+export const getTasks = async () => {
+  const { data } = await axiosClient.get<TaskDTO[]>("/tasks");
   return data;
 };
 

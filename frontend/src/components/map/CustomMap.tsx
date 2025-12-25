@@ -32,8 +32,8 @@ export const CustomMap = () => {
       <TasksSidebar tasks={tasks ?? []} />
 
       {/* Map */}
-      <div style={{ flex: 1 }}>
         <Map
+        style={{ flex: 1 }}
           initialViewState={{
             longitude: MAP_LONGITUDE,
             latitude: MAP_LATITUDE,
@@ -62,7 +62,6 @@ export const CustomMap = () => {
             );
           })}
         </Map>
-      </div>
 
       <CreateTaskDialog coords={createCoords} onClose={closeCreate} />
 

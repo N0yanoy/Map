@@ -34,9 +34,13 @@ export const TasksSidebar = ({ tasks }: Props) => {
     "CANCELLED",
   ]);
 
-  const toggleStatus = (s: TaskStatus) => {
-    setSelectedStatuses((prev) =>
-      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
+  const toggleStatus = (status: TaskStatus) => {
+    setSelectedStatuses((previousStatuses) =>
+      previousStatuses.includes(status)
+        ? previousStatuses.filter(
+            (existingStatus) => existingStatus !== status
+          )
+        : [...previousStatuses, status]
     );
   };
 
@@ -49,25 +53,26 @@ export const TasksSidebar = ({ tasks }: Props) => {
   };
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const normalizedSearchText  = query.trim().toLowerCase();
 
     return tasks.filter((task) => {
       // status filter
       if (!selectedStatuses.includes(task.status)) return false;
 
       // text filter
-      if (!q) return true;
+      if (!normalizedSearchText) return true;
       return (
-        task.title.toLowerCase().includes(q) ||
-        (task.description ?? "").toLowerCase().includes(q)
+        task.title.toLowerCase().includes(normalizedSearchText) ||
+        (task.description ?? "").toLowerCase().includes(normalizedSearchText)
       );
     });
   }, [tasks, query, selectedStatuses]);
 
   const grouped = useMemo(() => {
     const map = new Map<TaskStatus, TaskDTO[]>();
-    for (const s of groupsOrder) map.set(s, []);
-    for (const t of filtered) map.get(t.status)?.push(t);
+    for (const status of groupsOrder) map.set(status, []);
+    for (const task of filtered) map.get(task.status)?.push(task);
+    
     return map;
   }, [filtered]);
 
@@ -104,7 +109,6 @@ export const TasksSidebar = ({ tasks }: Props) => {
           radius="full"
         />
 
-        {/* ✅ NEW: Status filter chips */}
         <Flex direction="column" gap="2">
           <Flex gap="2" wrap="wrap">
             <Button
@@ -118,7 +122,6 @@ export const TasksSidebar = ({ tasks }: Props) => {
               הכל
             </Button>
 
-            {/* optional: clear all */}
             <Button
               size="1"
               radius="full"
@@ -197,9 +200,7 @@ export const TasksSidebar = ({ tasks }: Props) => {
                         {t.description || "אין תיאור"}
                       </Text>
 
-                      {/* ACTION ROW */}
                       <Flex justify="between" align="center" mt="2">
-                        {/* LEFT SIDE – status actions */}
                         <Flex gap="2">
                           {t.status === "TODO" && (
                             <>
@@ -261,7 +262,6 @@ export const TasksSidebar = ({ tasks }: Props) => {
                           )}
                         </Flex>
 
-                        {/* RIGHT SIDE – delete only */}
                         {(t.status === "TODO" ||
                           t.status === "IN_PROGRESS" ||
                           t.status === "DONE") && (

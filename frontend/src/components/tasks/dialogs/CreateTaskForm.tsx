@@ -17,7 +17,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const titleMaxLength = 60;
+  const TITLE_MAX_LENGTH = 60;
 
   const { selectTask } = useTasksStore();
   const createTask = useCreateTask();
@@ -50,7 +50,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
           <TextField.Root
             placeholder="כותרת המשימה"
             value={title}
-            onChange={(e) => setTitle(e.target.value.slice(0, titleMaxLength))}
+            onChange={(e) => setTitle(e.target.value.slice(0, TITLE_MAX_LENGTH))}
             radius="full"
             size="3"
             style={{
@@ -61,7 +61,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
             <TextField.Slot style={{ paddingInline: 6 }}>📝</TextField.Slot>
             <TextField.Slot style={{ paddingInline: 6 }}>
               <Text size="2" color="gray">
-                {title.length}/{titleMaxLength}
+                {title.length}/{TITLE_MAX_LENGTH}
               </Text>
             </TextField.Slot>
           </TextField.Root>
