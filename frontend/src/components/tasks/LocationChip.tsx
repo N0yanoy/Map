@@ -11,7 +11,6 @@ export const LocationChip = ({
   lat,
   lng,
   align = "center",
-  compact = false,
 }: Props) => {
   const text = `📍 ${lat.toFixed(4)}° צפון, ${lng.toFixed(4)}° מזרח`;
 
@@ -21,8 +20,8 @@ export const LocationChip = ({
   return (
     <Box style={{ display: "flex", justifyContent: justify }}>
       <Box
-        px={compact ? "3" : "5"}
-        py={compact ? "2" : "3"}
+        px="5"
+        py="3"
         style={{
           width: "100%",
           maxWidth: 520,

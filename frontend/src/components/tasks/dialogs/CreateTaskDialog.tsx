@@ -37,7 +37,6 @@ export const CreateTaskDialog = ({ coords, onClose }: Props) => {
                   lat={coords.lat}
                   lng={coords.lng}
                   align="center"
-                  compact={false}
                 />
                 <Separator size="4" style={{ opacity: 0.6 }} />
               </Section>

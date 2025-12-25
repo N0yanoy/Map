@@ -27,7 +27,7 @@ export const CustomMap = () => {
   const visibleTasks = (tasks ?? []).filter((t) => VISIBLE_ON_MAP.includes(t.status));
 
   return (
-    <MapShell style={{ display: "flex" }}>
+    <MapShell>
       {/* Sidebar */}
       <TasksSidebar tasks={tasks ?? []} />
 
