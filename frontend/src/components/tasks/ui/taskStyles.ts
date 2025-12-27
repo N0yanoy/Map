@@ -1,4 +1,28 @@
+import { Button, Text } from "@radix-ui/themes";
 import styled from "styled-components";
+
+export const PillButtonBase = styled(Button)`
+  font-weight: 900;
+  padding-inline: 18px;
+  border-radius: 999px;
+`;
+
+export const CloseXButtonBase = styled(Button)`
+  font-weight: 900;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+`;
+
+export const MutedErrorText = styled(Text)`
+  text-align: center;
+  font-weight: 800;
+`;
+
+export const MutedHintText = styled(Text)`
+  text-align: center;
+`;
 
 export const Stack = styled.div<{ space?: number }>`
   display: flex;

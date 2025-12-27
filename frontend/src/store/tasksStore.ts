@@ -4,19 +4,19 @@ import type { TaskDTO } from "../types/tasks";
 type Coords = { lng: number; lat: number };
 
 type TasksState = {
-  selectedTask: TaskDTO | null;
-  createCoords: Coords | null;
+  focusedTask: TaskDTO | null;
+  newTaskLocation: Coords | null;
 
-  selectTask: (task: TaskDTO | null) => void;
-  openCreateAt: (coords: Coords) => void;
-  closeCreate: () => void;
+  setFocusedTask: (task: TaskDTO | null) => void;
+  openNewTaskDialog: (coords: Coords) => void;
+  closeNewTaskDialog: () => void;
 };
 
 export const useTasksStore = create<TasksState>((set) => ({
-  selectedTask: null,
-  createCoords: null,
+  focusedTask: null,
+  newTaskLocation: null,
 
-  selectTask: (task) => set({ selectedTask: task }),
-  openCreateAt: (coords) => set({ createCoords: coords }),
-  closeCreate: () => set({ createCoords: null }),
+  setFocusedTask: (task) => set({ focusedTask: task }),
+  openNewTaskDialog: (coords) => set({ newTaskLocation: coords }),
+  closeNewTaskDialog: () => set({ newTaskLocation: null }),
 }));

@@ -7,21 +7,21 @@ import { useTasksStore } from "../../store/tasksStore";
 import type { TaskDTO, TaskStatus } from "../../types/tasks";
 
 import { MapShell } from "./mapStyles";
-import { CreateTaskDialog } from "../tasks/dialogs/CreateTaskDialog";
-import { TaskInfoDialog } from "../tasks/dialogs/TaskInfoDialog";
-import { TasksSidebar } from "../tasks/TasksSidebar";
+import { CreateTaskDialog } from "../tasks/dialogs/CreateTaskDialog/CreateTaskDialog";
+import { TaskInfoDialog } from "../tasks/dialogs/TaskInfoDialog/TaskInfoDialog";
+import { TasksSidebar } from "../tasks/TasksSidebar/TasksSidebar";
 
 const VISIBLE_ON_MAP: TaskStatus[] = ["TODO", "IN_PROGRESS"];
 
 export const CustomMap = () => {
-  const { data: tasks } = useTasks();
+  const { data: tasks, isLoading, isError } = useTasks();
 
   const {
-    selectedTask,
-    selectTask,
-    createCoords,
-    openCreateAt,
-    closeCreate,
+   focusedTask,
+   setFocusedTask,
+   newTaskLocation,
+   openNewTaskDialog,
+   closeNewTaskDialog,
   } = useTasksStore();
 
   const visibleTasks = (tasks ?? []).filter((t) => VISIBLE_ON_MAP.includes(t.status));
@@ -42,7 +42,7 @@ export const CustomMap = () => {
           mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
           onContextMenu={(e) => {
             e.preventDefault();
-            openCreateAt({ lng: e.lngLat.lng, lat: e.lngLat.lat });
+            openNewTaskDialog({ lng: e.lngLat.lng, lat: e.lngLat.lat });
           }}
         >
           {visibleTasks.map((task: TaskDTO) => {
@@ -56,16 +56,16 @@ export const CustomMap = () => {
                 
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
-                  selectTask(task);
+                  setFocusedTask(task);
                 }}
               />
             );
           })}
         </Map>
 
-      <CreateTaskDialog coords={createCoords} onClose={closeCreate} />
+      <CreateTaskDialog coords={newTaskLocation} onClose={closeNewTaskDialog} />
 
-      <TaskInfoDialog task={selectedTask} onClose={() => selectTask(null)} />
+      <TaskInfoDialog task={focusedTask} onClose={() => setFocusedTask(null)} />
     </MapShell>
   );
 };

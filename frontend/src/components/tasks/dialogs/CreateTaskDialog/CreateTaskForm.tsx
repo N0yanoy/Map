@@ -1,11 +1,12 @@
-import { TextField, TextArea, Text } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 import { useState } from "react";
 import type { Point } from "geojson";
-import { useCreateTask } from "../../../api/hooks/useCreateTask";
-import { useTasksStore } from "../../../store/tasksStore";
-import { RtlForm, Section, CenterActions } from "./dialogStyles";
-import { PillButton, MutedError } from "../ui/TaskUi";
-import { Stack } from "../ui/taskStyles";
+import { useCreateTask } from "../../../../api/hooks/useCreateTask";
+import { useTasksStore } from "../../../../store/tasksStore";
+import { RtlForm, Section, CenterActions } from "../dialogStyles";
+import { PillButton, MutedError } from "../../ui/TaskUi";
+import { Stack } from "../../ui/taskStyles";
+import { FormTextArea, FormTextFieldRoot, FormTextFieldSlot } from "./CreateTaskForm.styles";
 
 type Props = {
   lng: number;
@@ -19,7 +20,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
 
   const TITLE_MAX_LENGTH = 60;
 
-  const { selectTask } = useTasksStore();
+  const { setFocusedTask } = useTasksStore();
   const createTask = useCreateTask();
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -36,7 +37,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
       },
       {
         onSuccess: (createdTask) => {
-          selectTask(createdTask);
+          setFocusedTask(createdTask);
           onClose();
         },
       }
@@ -44,41 +45,27 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
   };
 
   return (
-    <RtlForm onSubmit={handleSubmit} lang="he">
-      <Stack space={16}>
+    <RtlForm onSubmit={handleSubmit}>
+      <Stack>
         <Section>
-          <TextField.Root
+          <FormTextFieldRoot
             placeholder="כותרת המשימה"
             value={title}
             onChange={(e) => setTitle(e.target.value.slice(0, TITLE_MAX_LENGTH))}
-            radius="full"
-            size="3"
-            style={{
-              borderRadius: 15,
-              paddingInline: 8,
-            }}
           >
-            <TextField.Slot style={{ paddingInline: 6 }}>📝</TextField.Slot>
-            <TextField.Slot style={{ paddingInline: 6 }}>
-              <Text size="2" color="gray">
+            <FormTextFieldSlot>📝</FormTextFieldSlot>
+            <FormTextFieldSlot>
+              <Text>
                 {title.length}/{TITLE_MAX_LENGTH}
               </Text>
-            </TextField.Slot>
-          </TextField.Root>
+            </FormTextFieldSlot>
+          </FormTextFieldRoot>
 
-          <TextArea
+          <FormTextArea
             placeholder="תיאור (אופציונלי)"
             resize="vertical"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            radius="large"
-            size="3"
-            dir="rtl"
-            style={{
-              minHeight: 150,
-              borderRadius: 15,
-              padding: "14px 16px",
-            }}
           />
         </Section>
 
@@ -89,7 +76,6 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
             type="button"
             variant="soft"
             color="gray"
-            size="3"
             onClick={onClose}
             disabled={createTask.isPending}
             style={{ minWidth: 120 }}
@@ -100,7 +86,6 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
           <PillButton
             type="submit"
             color="blue"
-            size="3"
             disabled={!title.trim() || createTask.isPending}
             style={{ minWidth: 120 }}
           >

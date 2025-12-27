@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Text } from "@radix-ui/themes";
+import { PillButton } from "../ui/TaskUi";
 
 export const Overlay = styled(Dialog.Overlay)`
   position: fixed;
@@ -66,4 +67,8 @@ export const CenterActions = styled.div`
   justify-content: center; 
   gap: 12px;              
   margin-top: 8px;
+`;
+
+export const WidePillButton = styled(PillButton)`
+  min-width: 120px;
 `;

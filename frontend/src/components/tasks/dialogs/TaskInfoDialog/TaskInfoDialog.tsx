@@ -1,14 +1,15 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Badge, Flex, Text } from "@radix-ui/themes";
-import type { TaskDTO, TaskStatus } from "../../../types/tasks";
-import { statusColorMap, statusLabel } from "../taskStatus";
-import { Content, Overlay, DialogHeader, DialogTitle, DialogSubtitle } from "./dialogStyles";
-import { useUpdateTaskStatus } from "../../../api/hooks/useUpdateTaskStatus";
-import { useDeleteTask } from "../../../api/hooks/useDeleteTask";
-import { LocationChip } from "../LocationChip";
-import { formatDateTimePretty } from "../../../utils/dateFormat";
-import { CloseXButton, PillButton, MutedHint } from "../ui/TaskUi";
-import { Stack, Divider, SoftCard, WhiteCard, EndRow, CenterRow } from "../ui/taskStyles";
+import type { TaskDTO, TaskStatus } from "../../../../types/tasks";
+import { statusColorMap, statusLabel } from "../../taskStatus";
+import { Content, Overlay, DialogHeader, DialogTitle, DialogSubtitle } from "../dialogStyles";
+import { useUpdateTaskStatus } from "../../../../api/hooks/useUpdateTaskStatus";
+import { useDeleteTask } from "../../../../api/hooks/useDeleteTask";
+import { LocationChip } from "../../LocationChip/LocationChip";
+import { formatDateTimePretty } from "../../../../utils/dateFormat";
+import { CloseXButton, PillButton, MutedHint } from "../../ui/TaskUi";
+import { Stack, Divider, SoftCard, WhiteCard, EndRow, CenterRow } from "../../ui/taskStyles";
+import { DescriptionBody, DescriptionTitle, InfoLabelText, InfoValueText } from "./TaskInfoDialog.styles";
 
 type Props = {
   task: TaskDTO | null;
@@ -16,15 +17,10 @@ type Props = {
 };
 
 const InfoRow = ({ label, value }: { label: string; value: string }) => {
-  const isEmpty = value === "—";
   return (
     <Flex align="center" justify="between">
-      <Text size="2" color="gray" style={{ fontWeight: 800 }}>
-        {label}
-      </Text>
-      <Text size="2" style={{ fontWeight: 900, opacity: isEmpty ? 0.6 : 1, textAlign: "left" }}>
-        {value}
-      </Text>
+      <InfoLabelText color="gray"> {label} </InfoLabelText>
+      <InfoValueText> {value} </InfoValueText>
     </Flex>
   );
 };
@@ -56,7 +52,7 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
         <Overlay />
         <Content>
           {task && (
-            <Stack space={16}>
+            <Stack>
               <EndRow>
                 <Dialog.Close asChild>
                   <CloseXButton />
@@ -70,8 +66,8 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
               <DialogHeader>
                 <DialogTitle>{task.title}</DialogTitle>
 
-                <Flex gap="2" justify="center" align="center" wrap="wrap">
-                  <Badge color={statusColorMap[task.status]} radius="full">
+                <Flex justify="center" align="center" wrap="wrap">
+                  <Badge color={statusColorMap[task.status]}>
                     {statusLabel[task.status]}
                   </Badge>
                   <DialogSubtitle>#{task.id.slice(0, 6)}</DialogSubtitle>
@@ -81,15 +77,12 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
               <Divider />
 
               <WhiteCard>
-                <Text size="2" color="gray" style={{ fontWeight: 900, textAlign: "center" }}>
+                <DescriptionTitle  color="gray">
                   תיאור
-                </Text>
-                <Text
-                  size="3"
-                  style={{ display: "block", marginTop: 10, textAlign: "center", lineHeight: "24px" }}
-                >
+                </DescriptionTitle>
+                <DescriptionBody>
                   {task.description?.trim() || "אין תיאור"}
-                </Text>
+                </DescriptionBody>
               </WhiteCard>
 
               <Stack space={14}>
@@ -106,14 +99,14 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
 
               <Divider />
 
-              <Flex justify="between" align="center" wrap="wrap" gap="2">
+              <Flex justify="between" align="center" wrap="wrap">
                 <CenterRow style={{ flex: 1 }}>
                   {task.status === "TODO" && (
                     <>
-                      <PillButton size="3" variant="soft" onClick={() => handleSetStatus("IN_PROGRESS")} disabled={busy}>
+                      <PillButton variant="soft" color="blue" onClick={() => handleSetStatus("IN_PROGRESS")} disabled={busy}>
                         התחל
                       </PillButton>
-                      <PillButton size="3" variant="soft" color="crimson" onClick={() => handleSetStatus("CANCELLED")} disabled={busy}>
+                      <PillButton variant="soft" color="crimson" onClick={() => handleSetStatus("CANCELLED")} disabled={busy}>
                         בטל
                       </PillButton>
                     </>
@@ -124,7 +117,7 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
                       <PillButton size="3" variant="soft" color="green" onClick={() => handleSetStatus("DONE")} disabled={busy}>
                         סיים
                       </PillButton>
-                      <PillButton size="3" variant="soft" color="crimson" onClick={() => handleSetStatus("CANCELLED")} disabled={busy}>
+                      <PillButton size="3" variant="soft" color="red" onClick={() => handleSetStatus("CANCELLED")} disabled={busy}>
                         בטל
                       </PillButton>
                     </>
@@ -133,7 +126,6 @@ export const TaskInfoDialog = ({ task, onClose }: Props) => {
 
                 {(task.status === "TODO" || task.status === "IN_PROGRESS" || task.status === "DONE") && (
                   <PillButton
-                    size="3"
                     variant="soft"
                     color="crimson"
                     onClick={handleDelete}

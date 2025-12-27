@@ -7,10 +7,10 @@ import {
   DialogTitle,
   DialogSubtitle,
   Section,
-} from "./dialogStyles";
+} from "../dialogStyles";
 import { CreateTaskForm } from "./CreateTaskForm";
-import { LocationChip } from "../LocationChip";
-import { Stack } from "../ui/taskStyles";
+import { LocationChip } from "../../LocationChip/LocationChip";
+import { Stack } from "../../ui/taskStyles";
 
 type Props = {
   coords: { lng: number; lat: number } | null;
@@ -26,7 +26,7 @@ export const CreateTaskDialog = ({ coords, onClose }: Props) => {
         <Overlay />
         <SmallContent>
           {coords && (
-            <Stack space={16}>
+            <Stack>
               <DialogHeader>
                 <DialogTitle>יצירת משימה</DialogTitle>
                 <DialogSubtitle>הוסיפי משימה למיקום שנבחר במפה</DialogSubtitle>
@@ -38,7 +38,7 @@ export const CreateTaskDialog = ({ coords, onClose }: Props) => {
                   lng={coords.lng}
                   align="center"
                 />
-                <Separator size="4" style={{ opacity: 0.6 }} />
+                <Separator style={{ opacity: 0.6 }} />
               </Section>
 
               <CreateTaskForm

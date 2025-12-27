@@ -7,7 +7,6 @@ export const statusLabel: Record<TaskStatus, string> = {
   CANCELLED: "בוטל",
 };
 
-// For Radix Badge/Button colors (Radix tokens)
 export const statusColorMap: Record<
   TaskStatus,
   "gray" | "blue" | "green" | "crimson" | "orange"
