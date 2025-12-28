@@ -17,10 +17,10 @@ export const CustomMap = () => {
   const { data: tasks, isLoading, isError } = useTasks();
 
   const {
-   focusedTask,
-   setFocusedTask,
-   newTaskLocation,
-   openNewTaskDialog,
+   activeTask,
+   setActiveTask,
+   newTaskCoords,
+   setTaskCoords,
    closeNewTaskDialog,
   } = useTasksStore();
 
@@ -42,7 +42,7 @@ export const CustomMap = () => {
           mapStyle="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
           onContextMenu={(e) => {
             e.preventDefault();
-            openNewTaskDialog({ lng: e.lngLat.lng, lat: e.lngLat.lat });
+            setTaskCoords({ lng: e.lngLat.lng, lat: e.lngLat.lat });
           }}
         >
           {visibleTasks.map((task: TaskDTO) => {
@@ -56,16 +56,16 @@ export const CustomMap = () => {
                 
                 onClick={(e) => {
                   e.originalEvent.stopPropagation();
-                  setFocusedTask(task);
+                  setActiveTask(task);
                 }}
               />
             );
           })}
         </Map>
 
-      <CreateTaskDialog coords={newTaskLocation} onClose={closeNewTaskDialog} />
+      <CreateTaskDialog coords={newTaskCoords} onClose={closeNewTaskDialog} />
 
-      <TaskInfoDialog task={focusedTask} onClose={() => setFocusedTask(null)} />
+      <TaskInfoDialog task={activeTask} onClose={() => setActiveTask(null)} />
     </MapShell>
   );
 };

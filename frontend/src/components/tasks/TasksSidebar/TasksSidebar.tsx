@@ -22,7 +22,7 @@ export const TasksSidebar = ({ tasks, isLoading, isError }: Props) => {
   if (isLoading) return <SidebarShell>טוען משימות…</SidebarShell>;
   if (isError) return <SidebarShell>שגיאה בטעינה</SidebarShell>;
 
-  const { setFocusedTask } = useTasksStore();
+  const { setActiveTask } = useTasksStore();
   const updateTaskStatus = useUpdateTaskStatus();
   const deleteTask = useDeleteTask();
 
@@ -174,7 +174,7 @@ export const TasksSidebar = ({ tasks, isLoading, isError }: Props) => {
                   <TaskCard
                     key={task.id}
                     task={task}
-                    onSelect={() => setFocusedTask(task)}
+                    onSelect={() => setActiveTask(task)}
                     onSetStatus={(status) => setStatus(task.id, status)}
                     onDelete={() => remove(task.id)}
                   />

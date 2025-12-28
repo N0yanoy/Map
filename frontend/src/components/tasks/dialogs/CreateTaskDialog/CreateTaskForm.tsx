@@ -20,7 +20,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
 
   const TITLE_MAX_LENGTH = 60;
 
-  const { setFocusedTask } = useTasksStore();
+  const { setActiveTask } = useTasksStore();
   const createTask = useCreateTask();
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -37,7 +37,7 @@ export const CreateTaskForm = ({ lng, lat, onClose }: Props) => {
       },
       {
         onSuccess: (createdTask) => {
-          setFocusedTask(createdTask);
+          setActiveTask(createdTask);
           onClose();
         },
       }
