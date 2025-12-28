@@ -1,10 +1,18 @@
-import { CostumMap } from './components/CostumMap'
-import './App.css'
+import { Theme } from "@radix-ui/themes";
+import { CustomMap } from "./components/map/CustomMap";
 
 const App = () => {
   return (
-  <CostumMap/>
+    <Theme
+      appearance="light"
+      accentColor="blue"
+      grayColor="slate"
+      radius="full"
+      scaling="110%"
+    >
+      <CustomMap />
+    </Theme>
   );
 };
 
-export default App
+export default App;
