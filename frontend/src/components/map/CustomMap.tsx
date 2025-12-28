@@ -29,7 +29,7 @@ export const CustomMap = () => {
   return (
     <MapShell>
       {/* Sidebar */}
-      <TasksSidebar tasks={tasks ?? []} />
+      <TasksSidebar tasks={tasks ?? [] } isLoading={isLoading} isError={isError} />
 
       {/* Map */}
         <Map

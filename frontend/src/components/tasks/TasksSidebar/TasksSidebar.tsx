@@ -18,6 +18,10 @@ type Props = {
 const groupsOrder: TaskStatus[] = ["TODO", "IN_PROGRESS", "DONE", "CANCELLED"];
 
 export const TasksSidebar = ({ tasks, isLoading, isError }: Props) => {
+
+  if (isLoading) return <SidebarShell>טוען משימות…</SidebarShell>;
+  if (isError) return <SidebarShell>שגיאה בטעינה</SidebarShell>;
+
   const { setFocusedTask } = useTasksStore();
   const updateTaskStatus = useUpdateTaskStatus();
   const deleteTask = useDeleteTask();
@@ -44,9 +48,6 @@ export const TasksSidebar = ({ tasks, isLoading, isError }: Props) => {
     setSelectedStatuses([]);
   };
 
-  if (isLoading) return <SidebarShell>טוען משימות… ⏳</SidebarShell>;
-  if (isError) return <SidebarShell>שגיאה בטעינה ❌</SidebarShell>;
-
   const filteredTasks = useMemo(() => {
     const normalizedSearchText = searchText.trim().toLowerCase();
 
@@ -64,19 +65,15 @@ export const TasksSidebar = ({ tasks, isLoading, isError }: Props) => {
     });
   }, [tasks, searchText, selectedStatuses]);
 
-  const groupedTasks = useMemo(() => {
-    const map = new Map<TaskStatus, TaskDTO[]>();
+  const groupedTasks = useMemo(
+    () =>
+      groupsOrder.reduce((acc, status) => {
+        acc.set(status, filteredTasks.filter(task => task.status === status));
+        return acc;
+      }, new Map<TaskStatus, TaskDTO[]>()),
+    [filteredTasks]
+  );
 
-    for (const status of groupsOrder) {
-      map.set(status, []);
-    }
-
-    for (const task of filteredTasks) {
-      map.get(task.status)?.push(task);
-    }
-
-    return map;
-  }, [filteredTasks]);
 
   const setStatus = (id: string, status: TaskStatus) => {
     updateTaskStatus.mutate({ id, status });
