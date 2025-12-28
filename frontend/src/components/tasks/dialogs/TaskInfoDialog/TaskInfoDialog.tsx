@@ -1,5 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Badge, Flex, Text } from "@radix-ui/themes";
+import { Badge, Flex } from "@radix-ui/themes";
 import type { TaskDTO, TaskStatus } from "../../../../types/tasks";
 import { statusColorMap, statusLabel } from "../../taskStatus";
 import { Content, Overlay, DialogHeader, DialogTitle, DialogSubtitle } from "../dialogStyles";

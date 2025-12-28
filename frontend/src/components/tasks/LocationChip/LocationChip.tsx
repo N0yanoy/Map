@@ -1,4 +1,4 @@
-import { Box, Text } from "@radix-ui/themes";
+import { Text } from "@radix-ui/themes";
 import { ChipBox, ChipWrapper } from "./LocationChip.styles";
 
 type Props = {

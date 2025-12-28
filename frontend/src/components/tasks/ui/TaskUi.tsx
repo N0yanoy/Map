@@ -1,4 +1,4 @@
-import { Button, Text } from "@radix-ui/themes";
+import { Button } from "@radix-ui/themes";
 import type React from "react";
 import { CloseXButtonBase, MutedErrorText, MutedHintText, PillButtonBase } from "./taskStyles";
 
